@@ -37,7 +37,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-between p-5 border-r-2 border-primary/5">
+    <div className="h-full w-full flex flex-col items-center justify-between px-5 py-6 border-r-2 border-primary/5">
       <div className="flex flex-col gap-10 items-center">
         <div className="flex gap-2 items-center">
           <Image src={Logo} className="rotate-[30deg] w-7" alt="logo" />
@@ -59,9 +59,12 @@ export default function Navbar() {
               pathname === "/dashboard"
                 ? "bg-secondary-foreground/20 text-secondary-foreground"
                 : "text-secondary-foreground/70"
-            }  fill-secondary-foreground rounded-xl transition-all hover:scale-105`}
+            }  rounded-xl transition-all hover:scale-105`}
           >
-            <BiSolidDashboard size={24} />
+            <BiSolidDashboard
+              size={24}
+              className="fill-secondary-foreground "
+            />
             <p>Dashboard</p>
           </Link>
           <Link
@@ -92,7 +95,7 @@ export default function Navbar() {
           <Link
             href={"/dashboard/employees"}
             className={`w-full px-4 py-2 text-center flex items-center gap-2 ${
-              pathname === "/dashboard/employees"
+              pathname.startsWith("/dashboard/employees")
                 ? "bg-secondary-foreground/20 text-secondary-foreground"
                 : "text-secondary-foreground/70"
             } rounded-xl transition-all hover:scale-105`}
