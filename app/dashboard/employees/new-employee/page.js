@@ -245,6 +245,9 @@ export default function NewEmployee() {
               selected={birthdate}
               onChange={(date) => setBirthdate(date)}
               dateFormat="MMMM d, yyyy"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
             />
             {errors.birthDate && (
               <p className="text-red-500 text-xs mt-1">{errors.birthDate}</p>
@@ -330,6 +333,9 @@ export default function NewEmployee() {
               selected={hiringDate}
               onChange={(date) => setHiringDate(date)}
               dateFormat="MMMM d, yyyy"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
             />
           </div>
           {/** city */}
