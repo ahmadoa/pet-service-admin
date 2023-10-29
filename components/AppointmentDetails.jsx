@@ -2,6 +2,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
+import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 export default function AppointmentDetails({ orderId, userId }) {
   const [appointment, setAppointment] = useState({});
@@ -9,6 +11,7 @@ export default function AppointmentDetails({ orderId, userId }) {
   const quantity = appointment.Duration ? Number(appointment.Duration) : 1;
   const date = new Date(appointment.Date);
   const [checked, setChecked] = useState(false);
+  const { toast } = useToast();
 
   const RetrieveAppointment = () => {
     fetch(`/api/appointment?orderId=${orderId}`, {
@@ -59,8 +62,19 @@ export default function AppointmentDetails({ orderId, userId }) {
       });
       if (response.ok) {
         console.log("updated successfully!");
+        toast({
+          title: "Appointment Updated Successfully!",
+          description: "You've updated appointment's status successfully",
+        });
       } else {
         console.log("failed to update!");
+        toast({
+          className: cn(
+            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+          ),
+          title: "Failed To Update Appointment!",
+          description: "Updating appointment has failed",
+        });
       }
     } else if (checked === false && appointment.Status === "Fulfilled") {
       const response = await fetch("/api/appointments", {
@@ -74,8 +88,22 @@ export default function AppointmentDetails({ orderId, userId }) {
       });
       if (response.ok) {
         console.log("updated successfully!");
+        toast({
+          className: cn(
+            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+          ),
+          title: "Appointment Updated Successfully!",
+          description: "You've updated appointment's status successfully",
+        });
       } else {
         console.log("failed to update!");
+        toast({
+          className: cn(
+            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+          ),
+          title: "Failed To Update Appointment!",
+          description: "Updating appointment has failed",
+        });
       }
     }
   };
@@ -90,8 +118,22 @@ export default function AppointmentDetails({ orderId, userId }) {
     });
     if (response.ok) {
       console.log("archived successfully!");
+      toast({
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+        ),
+        title: "Archived Appointment Successfully!",
+        description: "You've archived an appointment successfully",
+      });
     } else {
       console.log("failed to archive!");
+      toast({
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+        ),
+        title: "Failed To Archived Appointment!",
+        description: "Appointment archive failed",
+      });
     }
   };
 

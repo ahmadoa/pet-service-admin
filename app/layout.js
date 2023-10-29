@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "@/context/AuthContext";
+import { Toaster } from "@/components/ui/toaster";
 
 export const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         )}
       >
         <AuthContextProvider>{children}</AuthContextProvider>
+        <Toaster />
       </body>
     </html>
   );
