@@ -51,6 +51,19 @@ export default function NewEmployee() {
 
   var phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
+  function generateUniqueId(length) {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let uniqueId = "";
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      uniqueId += characters.charAt(randomIndex);
+    }
+
+    return uniqueId;
+  }
+
   const [errors, setErrors] = useState({});
 
   const ValidateAndAdd = async () => {
@@ -86,12 +99,15 @@ export default function NewEmployee() {
 
     setErrors(newErrors);
 
+    const uniqueId = generateUniqueId(15);
+
     if (Object.keys(newErrors).length === 0) {
       // call to api to add data
       const response = await fetch("/api/employees", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: uniqueId,
           name: name,
           birthdate: birthdate.toISOString(),
           email: email,
@@ -202,7 +218,7 @@ export default function NewEmployee() {
               Fullname
             </label>
             <input
-              className={` pl-2 h-10 rounded-lg bg-secondary outline outline-2 outline-secondary-foreground/50 focus:outline-2 focus:outline-primary focus:shadow-lg focus:shadow-primary/10 transition-all ${
+              className={` pl-2 h-10 rounded-lg bg-secondary outline outline-2 outline-secondary-foreground/50 focus:outline-2 focus:outline-primary focus:shadow-lg focus:shadow-primary/10 transition-all capitalize ${
                 name.length > 0 ? "focus:outline-green-500" : ""
               }`}
               name="name"

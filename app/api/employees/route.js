@@ -6,7 +6,7 @@ export async function POST(req) {
   try {
     const data = await req.json();
 
-    const EmployeeRef = doc(db, "Employees", data.name);
+    const EmployeeRef = doc(db, "Employees", data.id);
 
     await setDoc(EmployeeRef, data);
 
