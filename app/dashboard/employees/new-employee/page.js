@@ -113,6 +113,7 @@ export default function NewEmployee() {
           email: email,
           phonenumber: phoneNumber,
           profession: profession,
+          profile: downloadUrl,
           city: city,
           hiringdate: hiringDate,
         }),
@@ -306,7 +307,7 @@ export default function NewEmployee() {
               Profession
             </label>
             <input
-              className={` pl-2 h-10 rounded-lg bg-secondary outline outline-2 outline-secondary-foreground/50 focus:outline-2 focus:outline-primary focus:shadow-lg focus:shadow-primary/10 transition-all ${
+              className={` pl-2 h-10 rounded-lg bg-secondary outline outline-2 outline-secondary-foreground/50 focus:outline-2 focus:outline-primary focus:shadow-lg focus:shadow-primary/10 transition-all capitalize ${
                 profession.length > 0 ? "focus:outline-green-500" : ""
               }`}
               name="profession"

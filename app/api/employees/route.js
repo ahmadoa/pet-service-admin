@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDocs, setDoc, collection } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -14,5 +14,20 @@ export async function POST(req) {
   } catch (error) {
     console.log("Error adding employee:", error);
     return NextResponse.json({ error: "Failed to add employe" }, 500);
+  }
+}
+
+export async function GET(req) {
+  try {
+    const teamDocsSnap = await getDocs(collection(db, "Employees"));
+
+    const docs = [];
+    teamDocsSnap.forEach((doc) => {
+      docs.push(doc.data());
+    });
+
+    return NextResponse.json(docs);
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to retrieve team" }, 500);
   }
 }
