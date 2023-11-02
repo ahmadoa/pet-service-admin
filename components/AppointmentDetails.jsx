@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import ChatComponent from "./ChatComponent";
 
 export default function AppointmentDetails({ orderId, userId }) {
   const [appointment, setAppointment] = useState({});
@@ -140,8 +141,8 @@ export default function AppointmentDetails({ orderId, userId }) {
   return (
     <div className="w-full h-full px-5">
       {Object.keys(appointment).length > 0 && appointment ? (
-        <Tabs defaultValue="details" className="h-full w-full">
-          <div className="h-12 bg-secondary rounded-xl w-fit p-1 shadow-sm">
+        <Tabs defaultValue="details" className="h-full">
+          <div className="h-12 bg-secondary rounded-xl w-fit p-1 shadow-sm border-b-4 border-background">
             <TabsList className="h-full w-fit flex gap-3 px-1 bg-transparent">
               <TabsTrigger value="details" className="h-full w-fit">
                 Appointment details
@@ -257,11 +258,11 @@ export default function AppointmentDetails({ orderId, userId }) {
               </div>
             </div>
           </TabsContent>
-          <TabsContent
-            value="messages"
-            className="h-full bg-secondary rounded-xl p-5"
-          >
-            <div className="w-full h-full bg-no-repeat bg-cover rounded-2xl"></div>
+          <TabsContent value="messages" className="h-full">
+            <ChatComponent
+              userId={appointment.userId}
+              orderId={appointment.orderId}
+            />
           </TabsContent>
         </Tabs>
       ) : (

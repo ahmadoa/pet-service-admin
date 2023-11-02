@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { BsPlus } from "react-icons/bs";
-import { FiEdit, FiMail, FiPhoneCall } from "react-icons/fi";
+import { FiMail, FiPhoneCall } from "react-icons/fi";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -27,9 +28,9 @@ export default function Employees() {
 
   function formatDate(inputDate) {
     const date = new Date(inputDate);
-    const day = String(date.getDate()).padStart(2, "0"); // Get and pad the day
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Get and pad the month
-    const year = date.getFullYear(); // Get the year
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
 
     return `${day}/${month}/${year}`;
   }
@@ -72,7 +73,7 @@ export default function Employees() {
                   </div>
                 </div>
                 <div>
-                  <FiEdit
+                  <FaDeleteLeft
                     size={26}
                     className="stroke-primary mt-2 hover:scale-110 transition-all cursor-pointer"
                   />

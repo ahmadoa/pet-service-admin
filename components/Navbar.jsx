@@ -13,8 +13,10 @@ import {
 } from "react-icons/bs";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { UserAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
+  const { logOut } = UserAuth();
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -35,6 +37,14 @@ export default function Navbar() {
   useEffect(() => {
     checkUserStatus();
   }, []);
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="h-full w-full flex flex-col items-center justify-between px-5 py-6 border-r-2 border-primary/5">
@@ -106,7 +116,10 @@ export default function Navbar() {
         </div>
       </div>
       <div>
-        <Button className="w-full flex items-center gap-2 font-bold rounded-xl">
+        <Button
+          className="w-full flex items-center gap-2 font-bold rounded-xl"
+          onClick={handleSignOut}
+        >
           <BiLogOut size={20} />
           <p>Log out</p>
         </Button>

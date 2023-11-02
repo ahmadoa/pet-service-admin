@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={cn(
-          "h-screen overflow-hidden bg-background font-sans antialiased flex",
+          "h-screen bg-background font-sans antialiased flex",
           fontSans.variable
         )}
       >
