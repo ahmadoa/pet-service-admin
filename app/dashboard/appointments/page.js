@@ -18,24 +18,21 @@ const Icons = {
 };
 
 export default function Appointment() {
-  const [appointments, setAppointments] = useState([]);
-
+  const router = useRouter();
   const params = useSearchParams();
-
   const [selectedAppointment, setSelectedAppointment] = useState(
     params.get("id") || ""
   );
   const [currUser, setCurrUser] = useState("");
+  const [appointments, setAppointments] = useState([]);
 
-  const router = useRouter();
-
-  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
   const checkUserStatus = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoading(false);
+        setCurrUser(user.uid);
       } else {
         router.push("/login");
       }
@@ -69,6 +66,11 @@ export default function Appointment() {
     }
   };
 
+  useEffect(() => {
+    const id = params.get("id");
+    setSelectedAppointment(id || "");
+  }, [params]);
+
   return (
     <div className="w-full h-full grid grid-cols-12 gap-1">
       {appointments ? (
@@ -95,7 +97,6 @@ export default function Appointment() {
                         }
                       );
                       setSelectedAppointment(appointment.orderId);
-                      setCurrUser(appointment.userId);
                     }}
                   >
                     <div
@@ -147,11 +148,8 @@ export default function Appointment() {
             </div>
           </div>
           <div className="h-full col-span-8 pb-14">
-            {selectedAppointment.length > 0 && currUser.length > 0 ? (
-              <AppointmentDetails
-                orderId={selectedAppointment}
-                userId={currUser}
-              />
+            {selectedAppointment.length > 0 ? (
+              <AppointmentDetails orderId={selectedAppointment} />
             ) : (
               <></>
             )}

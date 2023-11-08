@@ -9,7 +9,7 @@ import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import moment from "moment/moment";
 import { motion } from "framer-motion";
 
-function ChatComponent({ userId, orderId }) {
+function ChatComponent({ userId, orderId , AppointDate, status}) {
   const [client, setClient] = useState({});
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -63,6 +63,7 @@ function ChatComponent({ userId, orderId }) {
           orderId: orderId,
           text: message,
           uid: currUser.uid,
+          href: `/appointments?id=${orderId}`,
         }),
       });
       if (response.ok) {
@@ -95,7 +96,7 @@ function ChatComponent({ userId, orderId }) {
 
   return (
     <div className="w-full h-full bg-secondary rounded-xl p-5 gap-2 relative">
-      <div className="absolute inset-0 flex flex-col py-5">
+      <div className="absolute inset-0 flex flex-col py-5 gap-2">
         {/** client info section */}
         <div className="w-full h-[10%] flex items-center px-5 gap-2">
           <div className="w-12 h-12 rounded-full overflow-hidden">
@@ -160,6 +161,19 @@ function ChatComponent({ userId, orderId }) {
             <input
               className="h-full flex-1 text-white bg-transparent focus:outline-none first-letter:capitalize"
               value={message}
+              disabled={
+                (status === "On Process" &&
+                  moment(AppointDate).isBefore(moment())) ||
+                status === "Fulfilled"
+              }
+              placeholder={
+                status === "On Process" &&
+                moment(AppointDate).isBefore(moment())
+                  ? "You can't send message before the appointment date"
+                  : status === "Fulfilled"
+                  ? "You can't send message after appointment is fulfilled"
+                  : "Type your message here..."
+              }
               onChange={(e) => setMessage(e.target.value)}
             />
             <Button

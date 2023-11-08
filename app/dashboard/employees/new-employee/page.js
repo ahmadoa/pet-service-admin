@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useDropzone } from "react-dropzone";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { BiCloudUpload } from "react-icons/bi";
 import { BsFillCalendarFill } from "react-icons/bs";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "@/lib/firebase";
+import { auth, storage } from "@/lib/firebase";
 import Spinner from "@/components/ui/spinner";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
@@ -13,6 +13,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function NewEmployee() {
   const { toast } = useToast();
@@ -25,6 +27,7 @@ export default function NewEmployee() {
   const [hiringDate, setHiringDate] = useState(new Date());
   const [phoneNumber, setPhoneNumber] = useState("");
   const [city, setCity] = useState("");
+ 
 
   const onDrop = useCallback((acceptedFiles) => {
     setSpin(true);

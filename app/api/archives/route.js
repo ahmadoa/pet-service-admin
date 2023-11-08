@@ -34,6 +34,7 @@ export async function POST(req) {
     if (docSnap.exists()) {
       const data = docSnap.data();
       await setDoc(doc(db, "Archives", data.orderId), data);
+      
       await deleteDoc(doc(db, "Orders", data.orderId));
     }
     return NextResponse.json({ message: "Archived successfully" });

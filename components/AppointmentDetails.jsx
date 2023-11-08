@@ -6,13 +6,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import ChatComponent from "./ChatComponent";
 
-export default function AppointmentDetails({ orderId, userId }) {
+export default function AppointmentDetails({ orderId }) {
   const [appointment, setAppointment] = useState({});
   const [disableCancel, setDisableCancel] = useState(false);
   const quantity = appointment.Duration ? Number(appointment.Duration) : 1;
   const date = new Date(appointment.Date);
   const [checked, setChecked] = useState(false);
   const { toast } = useToast();
+  const [defTab, setDefTab] = useState("details");
 
   const RetrieveAppointment = () => {
     fetch(`/api/appointment?orderId=${orderId}`, {
@@ -59,11 +60,15 @@ export default function AppointmentDetails({ orderId, userId }) {
           status: "Fulfilled",
           orderId: appointment.orderId,
           userId: appointment.userId,
+          href: `/appointments?id=${orderId}`,
         }),
       });
       if (response.ok) {
         console.log("updated successfully!");
         toast({
+          className: cn(
+            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+          ),
           title: "Appointment Updated Successfully!",
           description: "You've updated appointment's status successfully",
         });
@@ -138,10 +143,19 @@ export default function AppointmentDetails({ orderId, userId }) {
     }
   };
 
+  useEffect(() => {
+    setDefTab("details");
+  }, [appointment]);
+
   return (
     <div className="w-full h-full px-5">
       {Object.keys(appointment).length > 0 && appointment ? (
-        <Tabs defaultValue="details" className="h-full">
+        <Tabs
+          defaultValue={defTab}
+          value={defTab}
+          onValueChange={(value) => setDefTab(value)}
+          className="h-full"
+        >
           <div className="h-12 bg-secondary rounded-xl w-fit p-1 shadow-sm border-b-4 border-background">
             <TabsList className="h-full w-fit flex gap-3 px-1 bg-transparent">
               <TabsTrigger value="details" className="h-full w-fit">
@@ -262,6 +276,8 @@ export default function AppointmentDetails({ orderId, userId }) {
             <ChatComponent
               userId={appointment.userId}
               orderId={appointment.orderId}
+              AppointDate={appointment.Date}
+              status={appointment.Status}
             />
           </TabsContent>
         </Tabs>

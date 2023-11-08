@@ -1,5 +1,12 @@
 import { db } from "@/lib/firebase";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
@@ -35,6 +42,14 @@ export async function POST(req) {
     await updateDoc(docRef, {
       Status: data.status,
     });
+
+    if (data.status === "Fulfilled") {
+      await addDoc(collection(db, "users", data.userId, "Notifications"), {
+        type: "fulfilled",
+        createdAt: serverTimestamp(),
+        href: data.href,
+      });
+    }
 
     return NextResponse.json({ message: "Order updated successfully" });
   } catch (error) {

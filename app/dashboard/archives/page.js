@@ -29,13 +29,13 @@ export default function Archives() {
 
   const router = useRouter();
 
-  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
   const checkUserStatus = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoading(false);
+        setCurrUser(user.uid);
       } else {
         router.push("/login");
       }

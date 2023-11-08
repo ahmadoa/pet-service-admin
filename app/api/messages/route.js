@@ -27,6 +27,14 @@ export async function POST(req) {
       createdAt: serverTimestamp(),
     });
 
+    // add to client/user notifs
+    await addDoc(collection(db, "users", data.userId, "Notifications"), {
+      type: "message",
+      text: data.text,
+      createdAt: serverTimestamp(),
+      href: data.href,
+    });
+
     return NextResponse.json({ message: "message sent successfully" });
   } catch (error) {
     console.log("Error sending message:", error);
