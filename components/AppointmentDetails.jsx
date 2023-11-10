@@ -16,8 +16,10 @@ export default function AppointmentDetails({ orderId }) {
   const [defTab, setDefTab] = useState("details");
 
   const RetrieveAppointment = () => {
-    fetch(`/api/appointment?orderId=${orderId}`, {
-      method: "GET",
+    fetch(`/api/appointment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId: orderId }),
     })
       .then((response) => response.json())
       .then((data) => {

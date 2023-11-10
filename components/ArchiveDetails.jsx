@@ -7,8 +7,10 @@ export default function ArchiveDetails({ orderId, userId }) {
   const date = new Date(archive.Date);
 
   const RetrieveArchive = () => {
-    fetch(`/api/archive?orderId=${orderId}`, {
-      method: "GET",
+    fetch(`/api/archive`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId: orderId }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -86,15 +88,11 @@ export default function ArchiveDetails({ orderId, userId }) {
                 </div>
                 <div className="flex gap-5">
                   <div>Special Requests:</div>
-                  <div className="font-semibold">
-                    {archive.SpecialRequest}
-                  </div>
+                  <div className="font-semibold">{archive.SpecialRequest}</div>
                 </div>
                 <div className="flex gap-5">
                   <div>Payment Status:</div>
-                  <div className="font-semibold">
-                    {archive.PaymentStatus}
-                  </div>
+                  <div className="font-semibold">{archive.PaymentStatus}</div>
                 </div>
                 <div className="flex gap-5">
                   <div>Total Paid:</div>

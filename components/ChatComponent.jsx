@@ -9,7 +9,7 @@ import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import moment from "moment/moment";
 import { motion } from "framer-motion";
 
-function ChatComponent({ userId, orderId , AppointDate, status}) {
+function ChatComponent({ userId, orderId, AppointDate, status }) {
   const [client, setClient] = useState({});
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -28,8 +28,10 @@ function ChatComponent({ userId, orderId , AppointDate, status}) {
 
   // get user info
   const GetClient = () => {
-    fetch(`/api/client?userId=${userId}`, {
-      method: "GET",
+    fetch(`/api/client`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: userId }),
     })
       .then((response) => response.json())
       .then((data) => {

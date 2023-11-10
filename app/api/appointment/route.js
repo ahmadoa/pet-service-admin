@@ -2,10 +2,10 @@ import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
-export async function GET(req) {
+export async function POST(req) {
   try {
-    const { searchParams } = new URL(req.url);
-    const order_id = searchParams.get("orderId");
+    const data = await req.json();
+    const order_id = data.orderId;
 
     const docSnap = await getDoc(doc(db, "Orders", order_id));
 
