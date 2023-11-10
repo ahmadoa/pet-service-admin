@@ -69,6 +69,11 @@ export default function Archives() {
     }
   };
 
+  useEffect(() => {
+    const id = params.get("id");
+    setSelectedArchive(id || "");
+  }, [params]);
+
   return (
     <div className="w-full h-full grid grid-cols-12 gap-1">
       {archives ? (
@@ -92,7 +97,6 @@ export default function Archives() {
                         shallow: true,
                       });
                       setSelectedArchive(archive.orderId);
-                      setCurrUser(archive.userId);
                     }}
                   >
                     <div
