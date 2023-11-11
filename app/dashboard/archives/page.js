@@ -83,8 +83,10 @@ export default function Archives() {
               <div className="w-full h-12 flex items-center text-secondary-foreground text-lg bg-secondary rounded-xl font-bold p-5 shadow-sm">
                 All Archived Appointments
               </div>
-              <div className="h-full flex flex-col gap-3 overflow-scroll">
-                {archives.map((archive) => (
+              <div className="h-[calc(100vh-3.75rem)] relative">
+              <div className="absolute inset-0 overflow-auto disable-scrollbars">
+                  <div className="flex flex-col gap-3">
+                    {archives.map((archive) => (
                   <div
                     key={archive.orderId}
                     className={`w-full h-[4.5rem] flex gap-2 ${
@@ -142,6 +144,9 @@ export default function Archives() {
                     </div>
                   </div>
                 ))}
+                    </div>
+                  </div>
+                
               </div>
             </div>
           </div>
