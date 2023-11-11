@@ -76,8 +76,8 @@ export default function Appointment() {
     <div className="w-full h-full grid grid-cols-12 gap-1">
       {appointments ? (
         <>
-          <div className="h-full col-span-4">
-            <div className="h-full flex flex-col gap-3">
+          <div className="h-full col-span-4 overflow-hidden">
+            <div className="h-full flex flex-col gap-3 overflow-y-auto">
               <div className="w-full h-12 flex items-center text-secondary-foreground text-lg bg-secondary rounded-xl font-bold p-5 shadow-sm">
                 All Appointments
               </div>
