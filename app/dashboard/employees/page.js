@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils";
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
 
+  // Retrieve all employees
   const getEmployees = () => {
     fetch("/api/employees", {
       method: "GET",
@@ -41,6 +42,7 @@ export default function Employees() {
     getEmployees();
   }, []);
 
+  
   function formatDate(inputDate) {
     const date = new Date(inputDate);
     const day = String(date.getDate()).padStart(2, "0");
@@ -52,6 +54,7 @@ export default function Employees() {
 
   const { toast } = useToast();
 
+  // Remove employee from database
   const removeEmploye = async (id) => {
     try {
       await deleteDoc(doc(db, "Employees", id));

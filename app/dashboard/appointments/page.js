@@ -39,6 +39,7 @@ export default function Appointment() {
     });
   };
 
+  // Retrieve all appointments
   const RetrieveAppointments = () => {
     fetch(`/api/appointments`, {
       method: "GET",
