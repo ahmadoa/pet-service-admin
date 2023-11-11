@@ -9,7 +9,7 @@ export default function Home() {
 
   const checkUserStatus = () => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user.email === process.env.NEXT_PUBLIC_ALLOWED_EMAIL) {
         router.push("/dashboard");
       } else {
         router.push("/login");

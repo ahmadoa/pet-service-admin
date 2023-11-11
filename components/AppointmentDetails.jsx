@@ -268,7 +268,7 @@ export default function AppointmentDetails({ orderId }) {
                     Archive appointment
                   </Button>
                   <Button className="font-semibold" onClick={handleUpdate}>
-                    Save Changes
+                    Save
                   </Button>
                 </div>
               </div>

@@ -96,6 +96,22 @@ function ChatComponent({ userId, orderId, AppointDate, status }) {
     });
   }, []);
 
+  const today = new Date();
+  console.log("today: ", today);
+  const appointDate = new Date(AppointDate);
+  console.log("appointDate: ", appointDate);
+  const diffTime = today - appointDate;
+  console.log("diffTime: ", diffTime);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  console.log("Days until appointment:", diffDays);
+
+  // handle enter key
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      PostMessage();
+    }
+  };
+
   return (
     <div className="w-full h-full bg-secondary rounded-xl p-5 gap-2 relative">
       <div className="absolute inset-0 flex flex-col py-5 gap-2">
@@ -164,13 +180,14 @@ function ChatComponent({ userId, orderId, AppointDate, status }) {
               className="h-full flex-1 text-white bg-transparent focus:outline-none first-letter:capitalize"
               value={message}
               disabled={
-                (status === "On Process" &&
-                  moment(AppointDate).isBefore(moment())) ||
+                (status === "On Process" && diffDays < 0) ||
                 status === "Fulfilled"
               }
+              onKeyDown={(e) => {
+                handleKeyDown(e);
+              }}
               placeholder={
-                status === "On Process" &&
-                moment(AppointDate).isBefore(moment())
+                status === "On Process" && diffDays < 0
                   ? "You can't send message before the appointment date"
                   : status === "Fulfilled"
                   ? "You can't send message after appointment is fulfilled"

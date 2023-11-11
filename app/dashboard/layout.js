@@ -13,7 +13,7 @@ export default function Layout({ children }) {
   // check user
   const checkUserStatus = () => {
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
+      if (!user || user.email !== process.env.NEXT_PUBLIC_ALLOWED_EMAIL) {
         router.push("/login");
       } else {
         setIsLoading(false);
