@@ -156,7 +156,7 @@ export default function Dashboard() {
                 </span>
               </div>
             </div>
-            {appointments.length === 0 ? (
+            {appointments.length > 0 ? (
               <div className="w-full row-span-2 bg-secondary grid grid-rows-4 rounded-xl p-5 gap-4 overflow-hidden">
                 <div className="row-span-1  flex justify-between items-center">
                   <div className="h-full flex flex-col justify-between">
